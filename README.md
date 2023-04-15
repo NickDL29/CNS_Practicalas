@@ -1,2 +1,2 @@
-# CNS_Practicalas
+# CNS_Practicals
 GTU Cryptography And Network Security Practicals
