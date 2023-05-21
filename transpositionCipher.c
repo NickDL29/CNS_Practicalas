@@ -1,53 +1,114 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
-#define MAX_LEN 100
+int* convertKey(char* key){
+    int len=strlen(key);
+    int i,k;
+    int* temp = (int*)malloc(len * sizeof(int));
+    int* numbers = (int*)malloc(len * sizeof(int));
 
-void encrypt(char *plaintext, int key);
-void decrypt(char *ciphertext, int key);
+    for(i=0;i<len;i++){
+        temp[i] = key[i]-'0';
+    }
 
-int main() {
-    char input[MAX_LEN];
-    int key;
-    printf("Enter a string to encrypt: ");
-    fgets(input, MAX_LEN, stdin);
-    printf("Enter a key: ");
-    scanf("%d", &key);
-    encrypt(input, key);
-    printf("Encrypted string: %s\n", input);
-    decrypt(input, key);
-    printf("Decrypted string: %s\n", input);
-    return 0;
+    for(k=1;k<=len;k++){
+        for(i=0;i<len;i++){
+            if(temp[i] == k){
+                numbers[k-1] = i;
+                continue;
+            }
+        }
+    }
+    free(temp);
+    return numbers;
 }
 
-void encrypt(char *plaintext, int key) {
-    int len = strlen(plaintext);
-    char ciphertext[MAX_LEN];
-    int rows = (len + key - 1) / key;
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < key; j++) {
-            int index = i + j * rows;
-            if (index < len) {
-                ciphertext[i * key + j] = plaintext[index];
+char* encrypt(char* message, char* key){
+    int cols = strlen(key);
+    int len = strlen(message);
+    int rows = len % cols == 0 ? len/cols : (len/cols)+1;
+    int i,j,k=0;
+
+    char* cipher = (char*)malloc(len*sizeof(char));
+    char** table = (char**)malloc(cols * sizeof(char*));
+    for(i=0;i<cols;i++){
+        table[i] = (char*)malloc(rows * sizeof(char));
+    }
+
+    for(j=0;j<rows;j++){
+        for(i=0;i<cols;i++){
+            if(k<len){
+                table[i][j] = message[k++];
             } else {
-                ciphertext[i * key + j] = ' ';
+                table[i][j] = 'x';
             }
         }
     }
-    strcpy(plaintext, ciphertext);
+
+    int* order = convertKey(key);
+
+    k=0;
+    for(i=0;i<cols;i++){
+        for(j=0;j<rows;j++){
+            int c = order[i];
+            cipher[k++] = table[c][j];
+        }
+    }
+    free(order);
+    return cipher;
 }
 
-void decrypt(char *ciphertext, int key) {
-    int len = strlen(ciphertext);
-    char plaintext[MAX_LEN];
-    int rows = (len + key - 1) / key;
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < key; j++) {
-            int index = i * key + j;
-            if (index < len) {
-                plaintext[i + j * rows] = ciphertext[index];
-            }
+char* decrypt(char* message, char* key){
+    int cols = strlen(key);
+    int len = strlen(message);
+    int rows = len % cols == 0 ? len/cols : (len/cols)+1;
+    int i,j,k=0;
+
+    char* plain = (char*)malloc(len*sizeof(char));
+    int* order = convertKey(key);
+
+    char** table = (char**)malloc(cols * sizeof(char*));
+    for(i=0;i<cols;i++){
+        table[i] = (char*)malloc(rows * sizeof(char));
+    }
+
+    for(i=0;i<cols;i++){
+        for(j=0;j<rows;j++){
+            int c = order[i];
+            table[c][j] = message[k++];   
         }
     }
-    strcpy(ciphertext, plaintext);
+
+    k=0;
+    for(j=0;j<rows;j++){
+        for(i=0;i<cols;i++){
+            plain[k++] = table[i][j];
+        }
+    }
+    free(order);
+    return plain;
+}
+
+int main(){
+    char message[100];
+    char key[100];
+    
+    printf("Enter the message: ");
+    scanf("%s", message);
+
+    printf("Enter the key: ");
+    scanf("%s", key);
+
+    char* encryption = encrypt(message, key);
+    char* decryption = decrypt(encryption, key);
+    
+    printf("Message:\t%s\n", message);
+    printf("Encryption:\t%s\n",encryption);
+    printf("Decryption:\t%s\n",decryption);
+    
+    free(encryption);
+    free(decryption);
+
+    return 0;
 }
