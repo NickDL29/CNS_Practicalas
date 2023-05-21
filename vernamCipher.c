@@ -1,42 +1,32 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
 
-char* stringCipher(char* text, char* key, int isEncrypt) {
-    char* cipherText = (char*)malloc(strlen(text) + 1);
-    int len = strlen(key);
-    int factor = isEncrypt ? 1 : -1; // set factor based on whether we're encrypting or decrypting
-    for (int i = 0; text[i]; i++) {
-        int c = (text[i] - 'A' + factor * (key[i % len] - 'A') + 26) % 26 + 'A';
-        cipherText[i] = c;
+void vernam(const char* plaintext, const char* key, char* ciphertext) {
+    int len = strlen(plaintext);
+    int i;
+    for (i = 0; i < len; i++) {
+        int encryptedChar = ((plaintext[i] - 'A') ^ (key[i] - 'A')) % 26;
+        ciphertext[i] = encryptedChar + 'A';
     }
-    cipherText[strlen(text)] = '\0';
-    return cipherText;
+    ciphertext[i] = '\0';
 }
 
 int main() {
-    char text[100], key[100], choice;
-    printf("Enter the plain text: ");
-    scanf("%s", text);
+    char plaintext[100];
+    char key[100];
+    char ciphertext[100];
+
+    printf("Enter the plaintext: ");
+    scanf("%s", plaintext);
+
     printf("Enter the key: ");
     scanf("%s", key);
-    printf("Do you want to encrypt or decrypt the text? (e/d) ");
-    scanf(" %c", &choice);
 
-    for (int i = 0; text[i]; i++) text[i] = toupper(text[i]);
-    for (int i = 0; key[i]; i++) key[i] = toupper(key[i]);
+    vernam(plaintext, key, ciphertext);
+    printf("Encrypted ciphertext: %s\n", ciphertext);
+    
+    vernam(ciphertext, key, plaintext);
+    printf("Decrypted text: %s\n", plaintext);
 
-    if (choice == 'e') {
-        char* encryptedText = stringCipher(text, key, 1);
-        printf("Cipher Text - %s\n", encryptedText);
-        // free(encryptedText);
-    } else if (choice == 'd') {
-        char* decryptedText = stringCipher(text, key, 0);
-        printf("Plain Text - %s\n", decryptedText);
-        // free(decryptedText);
-    } else {
-        printf("Invalid choice.\n");
-    }
     return 0;
 }
