@@ -30,3 +30,10 @@ int main() {
 
     return 0;
 }
+
+// OUTPUT
+// Accepts only capital
+// Enter the plaintext: ABCDEF
+// Enter the key: GHIJKL
+// Encrypted ciphertext: GGKKOO
+// Decrypted text: ABCDEF
