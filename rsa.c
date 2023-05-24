@@ -64,3 +64,12 @@ int main() {
 
     return 0;
 }
+
+// OUTPUT
+// Enter two prime numbers (p and q): 17 11
+// Enter the value of e: 7
+// Enter the message to be encrypted: 88
+// e: 7, d: 23
+// Message:	88
+// Encryption:	11
+// Decryption:	88
