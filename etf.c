@@ -24,3 +24,8 @@ int main() {
     printf("phi(%d) = %d\n", n, phi(n));
     return 0;
 }
+
+// OUTPUT
+// Enter a positive integer: 35
+// phi(35) = 24
+
