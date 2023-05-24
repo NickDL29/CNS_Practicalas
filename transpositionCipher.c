@@ -112,3 +112,10 @@ int main(){
 
     return 0;
 }
+
+// OUTPUT
+// Enter the message: attackpostponeduntiltwoam
+// Enter the key: 4312567
+// Message:	attackpostponeduntiltwoam
+// Encryption:	ttnaaptmtsuoaodwcoixknlxpetx
+// Decryption:	attackpostponeduntiltwoamxxx
