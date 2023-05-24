@@ -31,3 +31,8 @@ int main() {
   return 0;
 }
 
+// OUTPUT
+// Enter message: abc
+// Enter shift: 3
+// Encrypted message: def
+// Decrypted message: abc
