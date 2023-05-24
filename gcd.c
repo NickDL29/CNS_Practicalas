@@ -11,3 +11,7 @@ int main() {
     printf("GCD of %d and %d is %d\n", a, b, gcd(a, b));
     return 0;
 }
+
+// OUTPUT
+// Enter two integers: 16 12
+// GCD of 16 and 12 is 4
