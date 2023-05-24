@@ -87,3 +87,8 @@ int main()
 
 	return 0;
 }
+
+// OUTPUT
+// Enter a 3-letter message to encrypt: ACT
+// Enter a 9-letter key: GYBNQKURP
+// Ciphertext: POH
