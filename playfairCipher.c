@@ -240,3 +240,19 @@ int main() {
 
     return 0;
 }
+
+// OUTPUT
+
+// Enter 1 to encrypt, 2 to decrypt: 1
+// Enter key text: MONARCHY
+// Enter text: ARMUHSEA
+// Key table:
+// m o n a r 
+// c h y b d 
+// e f g i k 
+// l p q s t 
+// u v w x z 
+
+// Cipher text: rmcmbpim
+
+
