@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-void encryptMsg(char msg[], int key) {
+void railfence(char msg[], int key) {
     int msgLen = strlen(msg), i, j, k = -1, row = 0, col = 0;
     char railMatrix[key][msgLen];
 
@@ -50,6 +50,6 @@ int main() {
         printf("Enter the key: ");
         scanf("%d", &key);
         printf("Original Message: %s", plaintext);
-        encryptMsg(plaintext, key);
+        railfence(plaintext, key);
     return 0;
 }
