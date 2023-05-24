@@ -43,3 +43,10 @@ int main()
 
     return 0;
 }
+
+// Accepts only small letters
+// OUTPUT
+// Enter the Messsage:geeksforgeeks
+// Enter the Key:nischay
+// The CipherText is: tmwmzfmeowgrs
+// The CipherText is: geeksforgeeks
