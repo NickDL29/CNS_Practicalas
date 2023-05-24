@@ -53,3 +53,10 @@ int main() {
         railfence(plaintext, key);
     return 0;
 }
+
+// OUTPUT
+// Enter the plaintext: meetme
+// Enter the key: 2
+// Original Message: meetme
+// Encrypted Message: memete
+// Decrypted Message: meetme
