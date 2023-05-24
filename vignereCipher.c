@@ -3,53 +3,43 @@
 
 #define MAX_LEN 100
 
-void vigenere(char* message, char* key, char* result, int encrypt) {
+void vignere(char* message, char* key, char* result, int factor)
+{
     int m_len = strlen(message);
     int k_len = strlen(key);
     int i, j;
-    for (i = 0, j = 0; i < m_len; i++, j++) {
-        if (j == k_len) {
+    for (i = 0, j = 0; i < m_len; i++, j++)
+    {
+        if (j == k_len)
+        {
             j = 0;
         }
         int m = message[i] - 'a';
         int k = key[j] - 'a';
-        int r = (m + (encrypt ? k : -k) + 26) % 26;
+        int r = (m + (factor ? k : -k) + 26) % 26;
         result[i] = r + 'a';
     }
     result[i] = '\0';
 }
 
-int main() {
-    char message[MAX_LEN];
-    char key[MAX_LEN];
-    char ciphertext[MAX_LEN];
-    char decrypted[MAX_LEN];
+int main()
+{
+    char message[MAX_LEN], key[MAX_LEN], cipher[MAX_LEN], decrypted[MAX_LEN];
 
-    printf("Do you want to encrypt or decrypt? (e/d): ");
-    char choice;
-    scanf("%c", &choice);
-    getchar();
+    printf("Enter the Messsage:");
+    scanf("%s", &message);
 
-    printf("Enter message: ");
-    fgets(message, MAX_LEN, stdin);
+    printf("Enter the Key:");
+    scanf("%s", &key);
 
-    printf("Enter key: ");
-    fgets(key, MAX_LEN, stdin);
+    // message[strcspn(message, "\n")] = '\0';
+    // key[strcspn(key, "\n")] = '\0';
 
-    // Remove newline character from inputs
-    message[strcspn(message, "\n")] = '\0';
-    key[strcspn(key, "\n")] = '\0';
+    vignere(message, key, cipher, 1);
+    printf("\nThe CipherText is: %s", cipher);
 
-    if (choice == 'e') {
-        vigenere(message, key, ciphertext, 1);
-        printf("Encrypted message: %s\n", ciphertext);
-    } else if (choice == 'd') {
-        vigenere(message, key, decrypted, 0);
-        printf("Decrypted message: %s\n", decrypted);
-    } else {
-        printf("Invalid choice. Please choose 'e' or 'd'.\n");
-        return 1;
-    }
+    vignere(cipher, key, decrypted, 0);
+    printf("\nThe CipherText is: %s", decrypted);
 
     return 0;
 }
